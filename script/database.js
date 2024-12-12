@@ -1,18 +1,6 @@
-const mysql = require('mysql2');
+import { createClient } from "@libsql/client";
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bdelplax'
+export const turso = createClient({
+  url: 'libsql://elplax-ivanjialo.aws-eu-west-3.turso.io',
+  authToken: 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3MzQwMTM4ODQsImlkIjoiZjcwNWE4M2UtM2VlYS00ZmRmLWIyM2ItOTY0YTJiMWIzODA3In0._dyBKlWQpMGBTkOcU0VXVsUlpJjlnJsFyEdX720nzaEZfKffDR0FGaRLGrZvyBoRZsdrnX-5XX4RWsrZ_ueJBw',
 });
-
-connection.connect((err) => {
-    if(err) {
-        console.error('Error database', err);
-        return;
-    }
-    console.log('Conexion exitosa a MYSQL');
-});
-
-module.exports = connection;
