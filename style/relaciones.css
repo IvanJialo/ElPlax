@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+}
+
+/* Estilo general */
+body {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: antiquewhite;
+    color: rgb(63, 63, 63);
+}
+
+/* Botón Log Off */
+.logoff-container {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
+.logoff-button {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: lightcoral;
+    color: black;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: solid 2px rgb(73, 73, 73);
+}
+
+.logoff-button:hover {
+    background-color: rgb(220, 100, 100);
+    color: white;
+}
+
+/* Aside */
+aside {
+    width: 200px;
+    height: 100vh;
+    padding: 20px 0;
+    background-color: lightcoral;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-right: 2px solid rgb(73, 73, 73);
+}
+
+aside a {
+    color: black;
+    text-decoration: none;
+    background-color: lightcoral;
+    padding: 10px;
+    width: 80%;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+aside a:hover {
+    background-color: rgb(220, 100, 100);
+}
+
+/* Main content */
+main {
+    margin-left: 220px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main h1 {
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+#assign-form-container {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    padding: 20px;
+    border: 2px solid rgb(73, 73, 73);
+    border-radius: 8px;
+    box-shadow: 4px 6px 10px 8px rgba(0, 0, 0, 0.2);
+}
+
+#assign-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+select, input[type="text"], button {
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid rgb(73, 73, 73);
+    border-radius: 8px;
+}
+
+button {
+    background-color: lightcoral;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: rgb(220, 100, 100);
+}
