@@ -1,12 +1,24 @@
-const express = require('express');
-const cors = require('cors');
-const connection = require('./database');
+import express from 'express';
+import cors from 'cors';
+import { turso } from './database.js';
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+
+async function obtenerEstudiantes() {
+    try {
+        const result = await turso.execute('SELECT * FROM estudiantes'); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al obtener estudiantes:', error); // Muestra errores en la consola
+    }
+}
+
+// Llama a la función para probarla
+obtenerEstudiantes();
 
 // Ruta para obtener todos los estudiantes
 app.get('/estudiantes', (req, res) => {
@@ -161,7 +173,7 @@ app.post('/insertarAsignaciones', (req, res) => {
             res.status(500).send('Error en la base de datos');
             return;
         }
-        res.status(200).send(JSON.stringify({mensaje: 'Asignación realizada con éxito'}));
+        res.status(200).send(JSON.stringify({ mensaje: 'Asignación realizada con éxito' }));
     });
 });
 
@@ -233,7 +245,7 @@ app.put('/estudiantes/:id', async (req, res) => {
 // Ruta para editar una empresa por ID
 app.put('/empresas/:id', (req, res) => {
     const { id } = req.params;
-    
+
 
     const query = `
         UPDATE empresas 
