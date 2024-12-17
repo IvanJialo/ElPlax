@@ -8,7 +8,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-async function obtenerEstudiantes() {
+async function getEstudiantes() {
     try {
         const result = await turso.execute('SELECT * FROM estudiantes'); // Ejecuta la consulta
         console.log(result.rows); // Muestra los datos en la consola
@@ -17,8 +17,160 @@ async function obtenerEstudiantes() {
     }
 }
 
-// Llama a la función para probarla
-obtenerEstudiantes();
+async function getEstudiantesID(id) {
+    try {
+        const result = await turso.execute('SELECT * FROM estudiantes WHERE id_estudiante = ?', [id]); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al obtener estudiantes:', error); // Muestra errores en la consola
+    }
+}
+
+async function getEmpresasID(id) {
+    try {
+        const result = await turso.execute('SELECT * FROM empresas WHERE id_empresa = ?', [id]); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al obtener empresas:', error); // Muestra errores en la consola
+    }
+}
+
+async function getProfesores() {
+    try {
+        const result = await turso.execute('SELECT * FROM profesores'); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al obtener profesores:', error); // Muestra errores en la consola
+    }
+}
+
+async function getEmpresas() {
+    try {
+        const result = await turso.execute('SELECT * FROM empresas'); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al obtener empresas:', error); // Muestra errores en la consola
+    }
+}
+
+async function getClases() {
+    try {
+        const result = await turso.execute('SELECT * FROM clases'); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al obtener empresas:', error); // Muestra errores en la consola
+    }
+}
+
+async function getAsignaciones() {
+    try {
+        const result = await turso.execute('SELECT * FROM asignaciones'); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al obtener empresas:', error); // Muestra errores en la consola
+    }
+}
+
+async function postInsertarEstudiantes(dni, nombre, apellido, curso, fecha, direccion, email, telefono, vehiculo) {
+    try {
+        const tieneVehiculo = vehiculo ? 1 : 0; // Convertimos el boolean a un valor 1 o 0
+
+        const query = `
+        INSERT INTO estudiantes (dni, nombre, apellido, id_clase, fecha_nacimiento, direccion, email, telefono, tiene_vehiculo) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        const values = [dni, nombre, apellido, curso, fecha, direccion, email, telefono, tieneVehiculo];
+
+        const result = await turso.execute(query, values); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al insertar estudiantes:', error); // Muestra errores en la consola
+    }
+}
+
+async function postInsertarEmpresas(cif, nombre, telefono, email, direccion, capacidad) {
+    try {
+        const query = `
+        INSERT INTO empresas (CIF, nombre_empresa, telefono, email, direccion, capacidad) 
+        VALUES (?, ?, ?, ?, ?, ?)
+        `;
+        const values = [cif, nombre, telefono, email, direccion, capacidad];
+        const result = await turso.execute(query, values); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al insertar empresas:', error); // Muestra errores en la consola
+    }
+}
+
+async function postInsertarAsignaciones(id_estudiante, id_empresa, fecha_asignacion) {
+    try {
+        const query = `
+        INSERT INTO asignaciones (id_estudiante, id_empresa, fecha_asignacion) 
+        VALUES (?, ?, ?)
+        `;
+        const values = [id_estudiante, id_empresa, fecha_asignacion];
+
+        const result = await turso.execute(query, values); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al insertar empresas:', error); // Muestra errores en la consola
+    }
+}
+
+async function deleteEstudianteId(id) {
+    try {
+        const result = await turso.execute('DELETE FROM estudiantes WHERE id_estudiante = ?', [id]); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al eliminar estudiantes:', error); // Muestra errores en la consola
+    }
+}
+
+async function deleteEmpresaId(id) {
+    try {
+        const result = await turso.execute('DELETE FROM empresas WHERE id_empresa = ?', [id]); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al eliminar empresas:', error); // Muestra errores en la consola
+    }
+}
+
+async function putEstudianteId(id, dni, nombre, apellido, curso, fecha, direccion, email, telefono, vehiculo) {
+    try {
+        const tieneVehiculo = vehiculo ? 1 : 0; // Convertimos el boolean a un valor 1 o 0
+
+        const query = `
+        UPDATE estudiantes 
+        SET dni = ?, nombre = ?, apellido = ?, id_clase = ?, fecha_nacimiento = ?, direccion = ?, email = ?, telefono = ?, tiene_vehiculo = ? 
+        WHERE id_estudiante = ?
+        `;
+        const values = [dni, nombre, apellido, curso, fecha, direccion, email, telefono, tieneVehiculo, id];
+
+        const result = await turso.execute(query, values); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al actualizar estudiantes:', error); // Muestra errores en la consola
+    }
+}
+
+async function putEmpresaId(id, cif, nombre, telefono, email, direccion, capacidad) {
+    try {
+        const query = `
+        UPDATE empresas 
+        SET CIF = ?, nombre_empresa = ?, telefono = ?, email = ?, direccion = ?, capacidad = ? 
+        WHERE id_empresa = ?
+        `;
+        const values = [cif, nombre, telefono, email, direccion, capacidad, id];
+
+        const result = await turso.execute(query, values); // Ejecuta la consulta
+        console.log(result.rows); // Muestra los datos en la consola
+    } catch (error) {
+        console.error('Error al actualizar empresas:', error); // Muestra errores en la consola
+    }
+}
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 
 // Ruta para obtener todos los estudiantes
 app.get('/estudiantes', (req, res) => {
@@ -271,5 +423,5 @@ app.put('/empresas/:id', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Servidor escuchando en el puerto ${port}`);
+    console.log('Servidor escuchando en el puerto ${port}');
 });
