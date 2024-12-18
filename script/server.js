@@ -5,6 +5,27 @@ import { turso } from './database.js';
 const app = express();
 const port = 3000;
 
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+
+const path = require('path');
+const PORT2 = process.env.PORT || 3000;
+
+app.use(express.static(path.join(__dirname)));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.listen(port, () => {
+    console.log(`Servidor escuchando en el puerto ${port}`);
+});
+
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+
 app.use(cors());
 app.use(express.json());
 
@@ -392,8 +413,6 @@ app.put('/estudiantes/:id', async (req, res) => {
 
 });
 
-
-
 // Ruta para editar una empresa por ID
 app.put('/empresas/:id', (req, res) => {
     const { id } = req.params;
@@ -420,8 +439,4 @@ app.put('/empresas/:id', (req, res) => {
             res.status(200).send('Empresa actualizada con éxito');
         }
     });
-});
-
-app.listen(port, () => {
-    console.log('Servidor escuchando en el puerto ${port}');
 });
