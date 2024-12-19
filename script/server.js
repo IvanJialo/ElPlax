@@ -5,6 +5,44 @@ import { turso } from './database.js';
 const app = express();
 const port = 3000;
 
+<<<<<<< Updated upstream
+=======
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+
+// Reemplazar require con import
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Configuración para obtener el __dirname en ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const PORT = process.env.PORT || 3000;
+
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, 'ElPlaX')));
+app.use(express.static(path.join(__dirname, '../html')));   // Para los archivos HTML
+app.use(express.static(path.join(__dirname, '../style')));    // Para los archivos CSS
+app.use(express.static(path.join(__dirname, '../script'))); // Para los archivos JS
+
+// Redirigir a index.html si no se encuentra la ruta
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'index.html')); // Ruta al index.html
+});
+
+// Iniciar el servidor
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
+
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+
+>>>>>>> Stashed changes
 app.use(cors());
 app.use(express.json());
 
